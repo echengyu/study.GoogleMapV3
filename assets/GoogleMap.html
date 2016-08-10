@@ -1,0 +1,44 @@
+<html>
+  <head>
+      <script src="http://maps.google.com/maps/api/js?sensor=true" type="text/javascript"></script>
+        
+        <script type="text/javascript">
+          var geocoder;
+          var map;
+  
+          function initmap(a,b) {
+            var m1 = new google.maps.LatLng(a,b);
+            geocoder =new google.maps.Geocoder();
+   
+            var mapOptions = {
+              zoom: 15,
+              mapTypeId: google.maps.MapTypeId.ROADMAP,
+              center: m1,
+              position: m1
+            };
+            map = new google.maps.Map(document.getElementById('map_canvas'),mapOptions); 
+            var marker = new google.maps.Marker({
+              position: m1, 
+              map: map 
+            });               
+          }
+    
+          function goto(address){
+   geocoder.geocode({'address': address },function(results, status){      
+     if(status == google.maps.GeocoderStatus.OK){        
+       map.setCenter(results[0].geometry.location);        
+       var marker =new google.maps.Marker({ 
+         map: map,
+         position: results[0].geometry.location 
+       });
+       }   
+     });  
+   }
+
+ </script>
+    
+      </head>
+      <body style="margin: 0px; padding: 0px;">
+  <div id="map_canvas" style="height: 100%; width: 100%;"></div>
+      </body>
+</html>
